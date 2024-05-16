@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Ingreso de Productos</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Codigo Producto"/>
+                <p:inputText placeholder="Ejem.0123" id="txtcodigo" value="#{bkn_inventario.id_producto}"/>
+                <p:outputLabel value="Precio Coste "/>
+                <p:inputText placeholder="Ejem. Q. 35" id="txtprecioc" value="#{bkn_inventario.precio_coste}"/>
+                <p:outputLabel value="Precio Publico "/>
+                <p:inputText placeholder="Ejem. mendizabal S.A" id="txtpreciop" value="#{bkn_inventario.precio_publico}"/>
+                <p:outputLabel value="Cantidad "/>
+                <p:inputText placeholder="Ejem. mendizabal S.A" id="txtcantidad" value="#{bkn_inventario.cantidad}"/>
+            </p:panelGrid>
+            <p:panelGrid columns="4">
+                <p:outputLabel value="INGRESAR"/>
+                <p:commandButton id="btningresar" value="ingresar" action="#{bkn_inventario.agregarInventario()}" styleClass="rounded-button ui-button-success"/> 
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</html>
