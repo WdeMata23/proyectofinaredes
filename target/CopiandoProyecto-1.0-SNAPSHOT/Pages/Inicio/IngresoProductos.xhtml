@@ -15,13 +15,16 @@
                 <p:outputLabel value="Precio Coste "/>
                 <p:inputText placeholder="Ejem. Q. 35" id="txtprecioc" value="#{bkn_inventario.precio_coste}"/>
                 <p:outputLabel value="Precio Publico "/>
-                <p:inputText placeholder="Ejem. mendizabal S.A" id="txtpreciop" value="#{bkn_inventario.precio_publico}"/>
+                <p:inputText placeholder="Ejem. Q. 35" id="txtpreciop" value="#{bkn_inventario.precio_publico}"/>
                 <p:outputLabel value="Cantidad "/>
-                <p:inputText placeholder="Ejem. mendizabal S.A" id="txtcantidad" value="#{bkn_inventario.cantidad}"/>
+                <p:inputText placeholder="Ejem.10" id="txtcantidad" value="#{bkn_inventario.cantidad}"/>
             </p:panelGrid>
             <p:panelGrid columns="4">
                 <p:outputLabel value="INGRESAR"/>
                 <p:commandButton id="btningresar" value="ingresar" action="#{bkn_inventario.agregarInventario()}" styleClass="rounded-button ui-button-success"/> 
+               <p:outputLabel value="REGRESAR"/>
+                <p:commandButton id="btnEGRESO" value="REGRESA" action="#{bkn_Inicio.Home()}" styleClass="rounded-button ui-button-success"/> 
+            
             </p:panelGrid>
         </h:form>
     </h:body>

@@ -14,6 +14,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import static org.primefaces.component.keyboard.KeyboardBase.PropertyKeys.password;
 
 /**
  *
@@ -21,81 +23,56 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "bkn_Login")
 public class Login {
-            private Long id;
+
+    private Long id;
     private String usuario;
     private String contraseña;
     private List<LoginDTO> lista;
     private LoginDAO consulta = new LoginDAO();
     
-    public void Ingresar() {
-   
-    lista = consulta.findAllLogin();
+ 
+public void login() {
+    FacesContext context = FacesContext.getCurrentInstance();
+    HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+    Long userId = consulta.getUserId(usuario, contraseña);
+    if (userId != null) {
+        // Almacena el nombre de usuario y su ID en la sesión
+        session.setAttribute("usuario", usuario);
+        session.setAttribute("userId", userId); // Cambio realizado aquí
 
-    // Buscar el usuario en la base de datos
-    boolean usuarioEncontrado = false;
-    int i = 0;
-    while (!usuarioEncontrado && i < lista.size()) {
-        if (lista.get(i).getUsuario().equals(getUsuario()) && lista.get(i).getContraseña().equals(getContraseña())) {
-            usuarioEncontrado = true;
-        } else {
-            i++;
-        }
-    }
+        // Mensaje de depuración
+        System.out.println("User ID stored in session: " + userId);
+        System.out.println("Session ID: " + session.getId());
 
-    // Si el usuario existe, redireccionar a la página principal
-    if (usuarioEncontrado) {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        // Registrar el inicio de sesión en la tabla bitacoras
+        consulta.insertBitacora(userId, "inicio de sesión");
+
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Successful", null));
         try {
-            externalContext.redirect("http://localhost:8080/CopiandoProyecto/Pages/Inicio/VentanaPrincipal.xhtml"); // Reemplaza esta URL con la que desees abrir.
-        } catch (IOException ex) {
-           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            // Redirigir a la página de ingreso de productos
+            context.getExternalContext().redirect("VentanaPrincipal.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     } else {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Contraseña/Usuario incorrecto"));
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Credentials", null));
     }
 }
-    
-    /**
-     * @return the lista
-     */
-    public List<LoginDTO> getLista() {
-        return lista;
-    }
-
-    /**
-     * @param lista the lista to set
-     */
-    public void setLista(List<LoginDTO> lista) {
-        this.lista = lista;
-    }
-
-    /**
-     * @return the consulta
-     */
-    public LoginDAO getConsulta() {
-        return consulta;
-    }
-
-    /**
-     * @param consulta the consulta to set
-     */
-    public void setConsulta(LoginDAO consulta) {
-        this.consulta = consulta;
-    }
-    
-
-      /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
+    public void logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+        Long userId = consulta.getUserId(usuario, contraseña);
+        if (session != null) {
+            session.invalidate(); // Invalida la sesión actual
+        System.out.println("Session ID: " + session.getId());
+        System.out.println("User ID stored in session: " + userId);
+        }
+        try {
+            // Redirigir a la página de login
+            context.getExternalContext().redirect("Login.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -126,5 +103,4 @@ public class Login {
         this.contraseña = contraseña;
     }
     
-
 }

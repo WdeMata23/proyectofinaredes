@@ -18,10 +18,8 @@
             <p:inputText id="TxtUsuario" value="#{bkn_Login.usuario}"/>
             <p:outputLabel value="CONTRASEÑA"/>
             <p:password id="toggle" value="#{bkn_Login.contraseña}" toggleMask="true" redisplay="true"/>
-            <p:commandButton id="btnAcceder" value="Acceder" action="#{bkn_Login.Ingresar()}"/> 
-        <p:messages id="messages" showDetail="true">
-            <p:autoUpdate/>
-        </p:messages>
+            <p:commandButton id="btnAcceder" value="Acceder" action="#{bkn_Login.login()}"/> 
+        
         </p:panelGrid>   
     </h:form> 
 </html>

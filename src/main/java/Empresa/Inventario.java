@@ -1,7 +1,10 @@
 package Empresa;
 
 import DAO.InventarioDAO;
+import DAO.LoginDAO;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 @ManagedBean(name = "bkn_inventario")
 public class Inventario {
@@ -12,15 +15,29 @@ public class Inventario {
     private String precio_publico;
     private String cantidad;
     InventarioDAO consulta = new InventarioDAO();
+    LoginDAO bitacora = new LoginDAO();
+    
+ public void agregarInventario() {
+    try {
+        consulta.ingresarInventario(getId_producto(), getPrecio_coste(), getPrecio_publico(), getCantidad());
+        // Obtener el ID del usuario de la sesión
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+        Long userId = (Long) session.getAttribute("userId"); // Asegurarse de usar el mismo nombre de atributo
 
-    // Agregar productos al inventario
-    public void agregarInventario() {
-        try {
-            consulta.ingresarInventario(getId_producto(), getPrecio_coste(), getPrecio_publico(), getCantidad());
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        // Mensaje de depuración
+        System.out.println("User ID retrieved from session: " + userId);
+        System.out.println("Session ID: " + session.getId());
+
+        if (userId != null) {
+            bitacora.insertBitacora(userId, "Ingreso Inventario");
+        } else {
+            System.out.println("User ID is null");
         }
+    } catch (Exception ex) {
+        ex.printStackTrace();
     }
+}
 
     public Long getId() {
         return id;

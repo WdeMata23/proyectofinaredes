@@ -4,12 +4,11 @@
  */
 package DAO;
 
-import DTO.LoginDTO;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
@@ -17,29 +16,55 @@ import java.util.List;
  */
 public class LoginDAO {
     
-    ConexionDAO con = new ConexionDAO();
-    
-           //metodo para consultar usuarios de la base de datos
-    public List<LoginDTO> findAllLogin() {
-        List<LoginDTO> Lista = new ArrayList<LoginDTO>();
+    private Connection conexion;
+  
+    public LoginDAO() {
         try {
-            String query = "SELECT id, usuario, contraseña FROM usuarios";
-            Statement s = con.conexionMysql().createStatement();
-            ResultSet r = s.executeQuery(query);
-
-            while (r.next()) {
-                LoginDTO dato = new LoginDTO();
-                dato.setId(r.getLong("id"));
-                dato.setUsuario(r.getString("usuario"));
-                dato.setContraseña(r.getString("contraseña"));
-                Lista.add(dato);
-            }
+            conexion = new ConexionDAO().conexionMysql();
         } catch (Exception e) {
-            System.out.println("Error al realizar la consulta");
+            e.printStackTrace();
         }
+    }
+        public Long getUserId(String usuario, String contraseña) {
+        String query = "SELECT id FROM usuarios WHERE usuario = ? AND contraseña = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(query)) {
+            stmt.setString(1, usuario);
+            stmt.setString(2, contraseña);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getLong("id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-        System.out.println("El tamaño de la lista es" + Lista.size());
-        //System.out.println("nombre lista );
-        return Lista;
+    public void insertBitacora(Long userId, String movimiento) {
+        String query = "INSERT INTO bitacora (id_usuario, movimiento, fecha) VALUES (?, ?, NOW())";
+        try (PreparedStatement stmt = conexion.prepareStatement(query)) {
+            stmt.setLong(1, userId);
+            stmt.setString(2, movimiento);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean verifyLogin(String username, String password) {
+        String query = "SELECT COUNT(*) FROM usuarios WHERE usuario = ? AND contraseña = ?";
+        try (PreparedStatement stmt = conexion.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

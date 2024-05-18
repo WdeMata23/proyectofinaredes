@@ -1,5 +1,8 @@
+Empresa\Login.class
 DAO\InventarioDAO.class
+DTO\LoginDTO.class
 Empresa\Interfaces.class
+DAO\LoginDAO.class
 DTO\InventarioDTO.class
 Empresa\Inventario.class
 DAO\ConexionDAO.class
