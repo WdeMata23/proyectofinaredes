@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Ingreso de Productos</title>
+    </h:head>
+    <h:body>
+        <div id="tabla" class="mostrarAutores">
+            <h1  class="contenedorFormulario"> <p:outputLabel value="CONTROL DE USUARIOS" /></h1>
+            <h:form>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText placeholder="Ingrese nombre" id="txtNombre" value="#{bkn_InventarioDTO.nombre}"/>
+                    <p:outputLabel value="Puesto"/>
+                    <p:inputText placeholder="Ingrese el puesto" id="txtPuesto" value="#{bkn_InventarioDTO.puesto}"/>
+                    <p:outputLabel value="Usuario"/>
+                    <p:inputText placeholder="Ingrese usuario" id="idUsuario" value="#{bkn_InventarioDTO.usuario}"/>
+                    <p:outputLabel value="Contraseña"/>
+                    <p:inputText placeholder="Ingrese contraseña" id="txtContraseña" value="#{bkn_InventarioDTO.contraseña}"/>
+                </p:panelGrid>
+                <p:panelGrid columns="4">
+                    <p:commandButton id="btnRegresar" value="Inicio" action="#{bkn_InventarioDTO.agregarUsuario()}" styleClass="rounded-button ui-button-success"/> 
+                    <p:commandButton id="btnIngresar" value="Agregar usuario" action="#{bkn_InventarioDTO.agregarUsuario()}" styleClass="rounded-button ui-button-success"/> 
+                </p:panelGrid>
+            </h:form>     
+            <h1  class="contenedorFormulario"> <p:outputLabel value="USUARIOS" /></h1>
+            <p:dataTable  id="tblDatos" widgetVar="dtProducts" var="usuario" value="#{bkn_InventarioDTO.listaUsuarios}"
+                          reflow="true" styleClass="products-table" selection="#{bkn_InventarioDTO.listaUsuarios}"
+                          rowKey="#{listaUsuario.id}" paginator="true" rows="15" rowSelectMode="add" paginatorPosition="top"
+                          editable="true">
+
+                <p:column headerText="ID" sortBy="" filterBy="">       
+                    <h:outputText value="#{usuario.id}"/>
+                </p:column>
+                <p:column headerText="NOMBRE" sortBy="" filterBy="">
+                    <h:outputText value="#{usuario.nombre}"/>
+                </p:column>
+                <p:column headerText="PUESTO" sortBy="" filterBy="">
+                    <h:outputText value="#{usuario.puesto}"/>
+                </p:column>
+                <p:column headerText="USUARIO" sortBy="" filterBy="">
+                    <h:outputText value="#{usuario.usuario}"/>
+                </p:column>
+                <p:column headerText="CONTRASEÑA" sortBy="" filterBy="">
+                    <h:outputText value="#{usuario.contraseña}"/>
+                </p:column>
+                <p:column headerText="CONTRASEÑA" sortBy="" filterBy="">
+                    <h:outputText value="#{usuario.contraseña}"/>
+                </p:column>
+            </p:dataTable>
+        </div>
+    </h:body>
+</html>
