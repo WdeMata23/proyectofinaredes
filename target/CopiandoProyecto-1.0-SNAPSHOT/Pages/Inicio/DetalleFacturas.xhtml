@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>detalle facturas de venta</title>
+    <link rel="stylesheet" 
+          href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css"/>
+    <link rel="stylesheet"
+          href="#{facesContext.externalContext.requestContextPath}/resources/css/theme.css"/>
+    <script type="text/javascript"
+            src="#{facesContext.externalContext.requestContextPath}/resources/js/script.js"/>
+    <style>
+        h1 {
+            font-size: 35px;
+            text-align: center;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h1>DETALLE FACTURA DE VENTAS</h1>
+    <div>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="ID_FACTURA "/>
+                <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtfactura" value="#{bkn_detalle_factura.id_factura}"/>
+                <p:outputLabel value="ID_PRODUCTO "/>
+                <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtproducto" value="#{bkn_detalle_factura.id_producto}"/>
+                <p:outputLabel value="CANTIDAD "/>
+                <p:inputText placeholder="Ejem. 18, 3, 35, 5 " id="txtcantidad" value="#{bkn_detalle_factura.cantidad}"/>
+            </p:panelGrid>
+            <p:panelGrid columns="4">
+                <p:commandButton icon="pi pi-plus" value="AGREGAR" actionListener="#{yourManagedBean.agregarAction}"/>
+                <p:commandButton icon="pi pi-refresh" value="ACTUALIZAR" actionListener="#{yourManagedBean.actualizarAction}"/>
+                <p:commandButton id="btnControlUsuarios" value="REGRESAR" action="ControlUsuarios.xhtml" styleClass="rounded-button ui-button-success" icon="pi pi-arrow-left" title="REGRESAR"/>
+            </p:panelGrid>
+            
+            <p:dataTable value="#{bkn_InventarioDTO.listadetallefactura}" var="item">
+                <p:column>
+                    <f:facet name="header">id</f:facet>
+                    <p:outputLabel value="#{item.id}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">id_factura</f:facet>
+                    <p:outputLabel value="#{item.id_factura}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">id.producto</f:facet>
+                    <p:outputLabel value="#{item.id_producto}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">cantidad</f:facet>
+                    <p:outputLabel value="#{item.cantidad}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </div>
+    <br></br>
+</h:body>
+</html>
