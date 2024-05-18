@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Reporte Inventario</title>
+    <link rel="stylesheet" 
+          href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css"/>
+    <link rel="stylesheet"
+          href="#{facesContext.externalContext.requestContextPath}/resources/css/theme.css"/>
+    <script type="text/javascript"
+            src="#{facesContext.externalContext.requestContextPath}/resources/js/script.js"/>
+    <style>
+        h1 {
+            font-size: 35px;
+            text-align: center;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h1>REPORTE DE INVENTARIO ACTUAL</h1>
+    <div>
+        <h:form>
+            <!-- Tabla de Reporte de Inventario -->
+            <p:dataTable value="#{bkn_InventarioDTO.listaInventario}" var="item">
+                <p:column>
+                    <f:facet name="header">id</f:facet>
+                    <p:outputLabel value="#{item.id}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">nombre</f:facet>
+                    <p:outputLabel value="#{item.nombre}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">precio_coste</f:facet>
+                    <p:outputLabel value="#{item.precio_coste}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">precio_publico</f:facet>
+                    <p:outputLabel value="#{item.precio_publico}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">cantidad</f:facet>
+                    <p:outputLabel value="#{item.cantidad}"/>
+                </p:column>
+            </p:dataTable>
+            <p:panelGrid columns="4">
+            <p:commandButton id="btnControlUsuarios" value="REGRESAR" action="ControlUsuarios.xhtml" styleClass="rounded-button ui-button-success"/>
+             </p:panelGrid>
+        </h:form>
+    </div>
+    <br></br>
+</h:body>
+</html>
