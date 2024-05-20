@@ -11,6 +11,69 @@ import DAO.InventarioDAO;
 
 @ManagedBean(name = "bkn_InventarioDTO")
 public class InventarioDTO implements Serializable {
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    /**
+     * @return the puesto
+     */
+    public String getPuesto() {
+        return puesto;
+    }
+
+    /**
+     * @param puesto the puesto to set
+     */
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
+    }
+
+    /**
+     * @return the contraseña
+     */
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    /**
+     * @param contraseña the contraseña to set
+     */
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    //Usuarios
+    private String nombre;
+    private String usuario;
+    private String puesto;
+    private String contraseña;
+    
     private Long id;
     private Long id_producto;
     private String precio_coste;
@@ -22,56 +85,71 @@ public class InventarioDTO implements Serializable {
     private List<Detalle_Factura> listadetallefactura;
     InventarioDAO consulta = new InventarioDAO();
 
-    public InventarioDTO(){
+    public InventarioDTO() {
     }
 
     @PostConstruct
     public void init() {
         // Puedes inicializar algún dato aquí si es necesario
-        
-        listarUsuarios(); 
+
+        listarUsuarios();
         listarInventario();
         listarDetalle_Factura();
         System.out.println("-------------------------------------------------PRUEBA DE IMPRESION----------------------------------------------------------------");
     }
-    
-    public void listarUsuarios(){
-        
-        ConsultasDAO consulta  = new ConsultasDAO();
-        
-        try{
-            setListaUsuarios(consulta.consultarUsuarios()) ;
+
+    public void agregarUsuario() {
+
+        ConsultasDAO consulta = new ConsultasDAO();
+
+        try {
+            //consulta.ingresarInventario(getId_producto(), getPrecio_coste(), getPrecio_publico(), getCantidad());
+            consulta.insertarUsuario(getNombre(), getPuesto(), getUsuario(), getContraseña());
+            System.out.println("DATOS USUARIO: " + getNombre() + ":" + getPuesto() + ":" + getUsuario() + ":" + getContraseña());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Error al agregar usuario");
+        }
+    }
+
+    public void listarUsuarios() {
+
+        ConsultasDAO consulta = new ConsultasDAO();
+
+        try {
+            setListaUsuarios(consulta.consultarUsuarios());
             System.out.println("Usuarios: " + consulta.consultarUsuarios());
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error al listar usuarios");
         }
-      
+
     }
-    
-    public void listarInventario (){
+
+    public void listarInventario() {
         ConsultasDAO consulta = new ConsultasDAO();
-        
-        try{
+
+        try {
             setListaInventario(consulta.consultarinventario());
             System.out.println("Inventario: " + consulta.consultarinventario());
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ERROR AL LISTAR EL INVENTARIO");
         }
-        
+
     }
-        public void listarDetalle_Factura (){
+
+    public void listarDetalle_Factura() {
         ConsultasDAO consulta = new ConsultasDAO();
-        
-        try{
+
+        try {
             //listadetallefactura
             setListadetallefactura(consulta.consultarDetalleFactura());
             System.out.println("Detalle Factura: " + consulta.consultarDetalleFactura());
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ERROR AL LISTAR EL INVENTARIO");
         }
-        
+
     }
-   
+
     public void agregarInventario() {
         System.out.println("Código Producto: " + getId_producto());
         System.out.println("Precio Coste: " + getPrecio_coste());
@@ -145,7 +223,8 @@ public class InventarioDTO implements Serializable {
     public void setListaInventario(List<Inventario> listaInventario) {
         this.listaInventario = listaInventario;
     }
-        /**
+
+    /**
      * @return the listadetallefactura
      */
     public List<Detalle_Factura> getListadetallefactura() {

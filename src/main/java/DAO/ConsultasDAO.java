@@ -31,7 +31,7 @@ public class ConsultasDAO {
 
             while (r.next()) {
                 Usuario usuario = new Usuario();
-                
+
                 usuario.setId(r.getLong("id"));
                 usuario.setNombre(r.getString("nombre"));
                 usuario.setPuesto(r.getString("puesto"));
@@ -53,7 +53,7 @@ public class ConsultasDAO {
         }
 
         return Usuarios;
-    }   
+    } 
     
     public List<Inventario> consultarinventario ( ) throws Exception {
         List<Inventario> Inventarios = new ArrayList<Inventario>();
@@ -124,6 +124,30 @@ public class ConsultasDAO {
 
         return Detallefactura;
     }   
+        
+    public void insertarUsuario(String nombre, String puesto, String usuario, String contraseña) throws SQLException {
+
+        String query = "INSERT INTO usuarios (nombre, puesto, usuario, contraseña) VALUES ('" + nombre + "','" + puesto + "','" + usuario + "','" + contraseña + "')";
+        try {
+
+            //String query="INSERT INTO clientes VALUES ('"+cliente.getNombre()+"','"+cliente.getCorreo()+"','"+cliente.getDireccion()+"','"+cliente.getTelefono()+"')";
+            //String query = "INSERT INTO clientes VALUES (6, 'isai', 'isaimixia18@gmail.com','Santa Luxia', '48407205')";  
+            Statement s = con.conexionMysql().createStatement();
+            s.executeUpdate(query);
+
+            System.out.println("-------------------Datos Insertados--------------------------------");
+            System.out.println("Nombre: " + nombre + "Puesto: " + puesto + "Usuario: " + usuario + "Contraseña: " + contraseña);
+            System.out.println("---------------------------------------------------");
+
+        } catch (Exception e) {
+            System.out.println("Error al realizar la insercion");
+        }
+
+        System.out.println("-------------------Datos--------------------------------");
+        System.out.println("QUERY: " + query);
+        System.out.println("Nombre: " + nombre + " Puesto: " + puesto + " Usuario: " + usuario + " Contraseña: " + contraseña);
+        System.out.println("---------------------------------------------------");
+    }
     
 
 }
