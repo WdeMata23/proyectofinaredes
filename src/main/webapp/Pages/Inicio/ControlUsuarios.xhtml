@@ -22,7 +22,7 @@
                     <p:inputText placeholder="Ingrese contraseña" id="txtContraseña" value="#{bkn_InventarioDTO.contraseña}"/>
                 </p:panelGrid>
                 <p:panelGrid columns="4">
-                    <p:commandButton id="btnRegresar" value="Inicio" action="#{bkn_InventarioDTO.agregarUsuario()}" styleClass="rounded-button ui-button-success"/> 
+                     <p:commandButton id="btnEGRESO" value="REGRESAR" action="#{bkn_Inicio.Home()}" styleClass="rounded-button ui-button-success"/> 
                     <p:commandButton id="btnIngresar" value="Agregar usuario" action="#{bkn_InventarioDTO.agregarUsuario()}" styleClass="rounded-button ui-button-success"/> 
                 </p:panelGrid>
             </h:form>     
@@ -46,10 +46,6 @@
                 </p:column>
                 <p:column headerText="CONTRASEÑA" sortBy="" filterBy="">
                     <h:outputText value="#{usuario.contraseña}"/>
-                </p:column>
-                <p:column headerText="CONTRASEÑA" sortBy="" filterBy="">
-                    <h:outputText value="#{usuario.contraseña}"/>
-                </p:column>
             </p:dataTable>
         </div>
     </h:body>
