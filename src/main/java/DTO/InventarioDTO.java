@@ -8,66 +8,10 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import DAO.InventarioDAO;
+import DAO.DetalleFacturaDAO;
 
 @ManagedBean(name = "bkn_InventarioDTO")
 public class InventarioDTO implements Serializable {
-
-    /**
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the usuario
-     */
-    public String getUsuario() {
-        return usuario;
-    }
-
-    /**
-     * @param usuario the usuario to set
-     */
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    /**
-     * @return the puesto
-     */
-    public String getPuesto() {
-        return puesto;
-    }
-
-    /**
-     * @param puesto the puesto to set
-     */
-    public void setPuesto(String puesto) {
-        this.puesto = puesto;
-    }
-
-    /**
-     * @return the contraseña
-     */
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    /**
-     * @param contraseña the contraseña to set
-     */
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
     //Usuarios
     private String nombre;
     private String usuario;
@@ -76,6 +20,7 @@ public class InventarioDTO implements Serializable {
     
     private Long id;
     private Long id_producto;
+    private Long id_factura;
     private String precio_coste;
     private String precio_publico;
     private String cantidad;
@@ -84,6 +29,7 @@ public class InventarioDTO implements Serializable {
     private List<Inventario> listaInventario;
     private List<Detalle_Factura> listadetallefactura;
     InventarioDAO consulta = new InventarioDAO();
+    DetalleFacturaDAO consultas = new DetalleFacturaDAO();
 
     public InventarioDTO() {
     }
@@ -136,7 +82,6 @@ public class InventarioDTO implements Serializable {
         }
 
     }
-
     public void listarDetalle_Factura() {
         ConsultasDAO consulta = new ConsultasDAO();
 
@@ -149,6 +94,18 @@ public class InventarioDTO implements Serializable {
         }
 
     }
+    
+        public void agregarDetalleFactura (){
+        System.out.println("id_factura: " + getId_factura());
+        System.out.println("id_producto: " + getId_producto());
+        System.out.println("cantidad: " + getCantidad());
+        try{
+            consultas.insertarDetalleFactura(getId_factura(),getId_producto(),getCantidad());
+        }catch (Exception ex){
+            Logger.getLogger(InventarioDTO.class.getName()).log(Level.SEVERE,null,ex);
+        }
+    }
+    
 
     public void agregarInventario() {
         System.out.println("Código Producto: " + getId_producto());
@@ -161,6 +118,21 @@ public class InventarioDTO implements Serializable {
             Logger.getLogger(InventarioDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+        /**
+     * @return the id_factura
+     */
+    public Long getId_factura() {
+        return id_factura;
+    }
+
+    /**
+     * @param id_factura the id_factura to set
+     */
+    public void setId_factura(Long id_factura) {
+        this.id_factura = id_factura;
+    }
+
 
     public Long getId() {
         return id;
@@ -250,6 +222,62 @@ public class InventarioDTO implements Serializable {
      */
     public void setListaUsuarios(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
+    }
+    
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    /**
+     * @return the puesto
+     */
+    public String getPuesto() {
+        return puesto;
+    }
+
+    /**
+     * @param puesto the puesto to set
+     */
+    public void setPuesto(String puesto) {
+        this.puesto = puesto;
+    }
+
+    /**
+     * @return the contraseña
+     */
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    /**
+     * @param contraseña the contraseña to set
+     */
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
 }
