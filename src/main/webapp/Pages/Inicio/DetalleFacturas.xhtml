@@ -55,7 +55,7 @@
                     <p:outputLabel value="#{item.cantidad}" />
                 </p:column>
                 <p:column headerText="Acciones">
-                    <p:commandButton value="Imprimir" 
+                    <p:commandButton value="Ver Factura" 
                                      actionListener="#{bkn_detallefactura.setIdFacturaSeleccionada(item.id_factura)}"
                                      update=":formDetalleFacturas:reporteDialog" 
                                      oncomplete="PF('reporteDialog').show()" 
