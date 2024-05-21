@@ -1,5 +1,8 @@
 package DTO;
-
+/**
+ *
+ * @author Luis Velasquez
+ */
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean; 
@@ -72,8 +75,7 @@ public class RegistroProductosDTO implements Serializable {
         modelo = "";
         productoSeleccionado = null;
     }
-
-    // Getters y setters
+ 
     public int getId() {
         return id;
     }
