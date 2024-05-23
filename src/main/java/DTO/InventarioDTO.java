@@ -12,12 +12,105 @@ import DAO.DetalleFacturaDAO;
 
 @ManagedBean(name = "bkn_InventarioDTO")
 public class InventarioDTO implements Serializable {
+
+    /**
+     * @return the lista_facturas
+     */
+    public List<Factura> getLista_facturas() {
+        return lista_facturas;
+    }
+
+    /**
+     * @param lista_facturas the lista_facturas to set
+     */
+    public void setLista_facturas(List<Factura> lista_facturas) {
+        this.lista_facturas = lista_facturas;
+    }
+
+    /**
+     * @return the id_factura_factura
+     */
+    public Long getId_factura_factura() {
+        return id_factura_factura;
+    }
+
+    /**
+     * @param id_factura_factura the id_factura_factura to set
+     */
+    public void setId_factura_factura(Long id_factura_factura) {
+        this.id_factura_factura = id_factura_factura;
+    }
+
+    /**
+     * @return the id_detalle_factura
+     */
+    public Long getId_detalle_factura() {
+        return id_detalle_factura;
+    }
+
+    /**
+     * @param id_detalle_factura the id_detalle_factura to set
+     */
+    public void setId_detalle_factura(Long id_detalle_factura) {
+        this.id_detalle_factura = id_detalle_factura;
+    }
+
+    /**
+     * @return the fecha_factura
+     */
+    public String getFecha_factura() {
+        return fecha_factura;
+    }
+
+    /**
+     * @param fecha_factura the fecha_factura to set
+     */
+    public void setFecha_factura(String fecha_factura) {
+        this.fecha_factura = fecha_factura;
+    }
+
+    /**
+     * @return the cliente
+     */
+    public String getCliente() {
+        return cliente;
+    }
+
+    /**
+     * @param cliente the cliente to set
+     */
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
+     * @return the monto_total
+     */
+    public String getMonto_total() {
+        return monto_total;
+    }
+
+    /**
+     * @param monto_total the monto_total to set
+     */
+    public void setMonto_total(String monto_total) {
+        this.monto_total = monto_total;
+    }
     //Usuarios
     private String nombre;
     private String usuario;
     private String puesto;
     private String contraseña;
-    
+
+    //Factura
+    private Long id_factura_factura;
+    private Long id_detalle_factura;
+    private String fecha_factura;
+    private String cliente;
+    private String monto_total;
+    private List<Factura> lista_facturas;
+
+    //Detalle_factura
     private Long id;
     private Long id_producto;
     private Long id_factura;
@@ -37,11 +130,25 @@ public class InventarioDTO implements Serializable {
     @PostConstruct
     public void init() {
         // Puedes inicializar algún dato aquí si es necesario
-
+        listarFacturas();
         listarUsuarios();
         listarInventario();
         listarDetalle_Factura();
         System.out.println("-------------------------------------------------PRUEBA DE IMPRESION----------------------------------------------------------------");
+    }
+
+    public void listarFacturas() {
+
+        ConsultasDAO consulta = new ConsultasDAO();
+
+        try {
+//            setListaUsuarios(consulta.consultarUsuarios());
+            setLista_facturas(consulta.consultarFacturas());
+//            System.out.println("Facturas: " + );
+        } catch (Exception e) {
+            System.out.println("Error al listar facturas");
+        }
+
     }
 
     public void agregarUsuario() {
@@ -82,6 +189,7 @@ public class InventarioDTO implements Serializable {
         }
 
     }
+
     public void listarDetalle_Factura() {
         ConsultasDAO consulta = new ConsultasDAO();
 
@@ -94,18 +202,17 @@ public class InventarioDTO implements Serializable {
         }
 
     }
-    
-        public void agregarDetalleFactura (){
+
+    public void agregarDetalleFactura() {
         System.out.println("id_factura: " + getId_factura());
         System.out.println("id_producto: " + getId_producto());
         System.out.println("cantidad: " + getCantidad());
-        try{
-            consultas.insertarDetalleFactura(getId_factura(),getId_producto(),getCantidad());
-        }catch (Exception ex){
-            Logger.getLogger(InventarioDTO.class.getName()).log(Level.SEVERE,null,ex);
+        try {
+            consultas.insertarDetalleFactura(getId_factura(), getId_producto(), getCantidad());
+        } catch (Exception ex) {
+            Logger.getLogger(InventarioDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
     public void agregarInventario() {
         System.out.println("Código Producto: " + getId_producto());
@@ -118,8 +225,8 @@ public class InventarioDTO implements Serializable {
             Logger.getLogger(InventarioDTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-        /**
+
+    /**
      * @return the id_factura
      */
     public Long getId_factura() {
@@ -132,7 +239,6 @@ public class InventarioDTO implements Serializable {
     public void setId_factura(Long id_factura) {
         this.id_factura = id_factura;
     }
-
 
     public Long getId() {
         return id;
@@ -223,7 +329,7 @@ public class InventarioDTO implements Serializable {
     public void setListaUsuarios(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
-    
+
     /**
      * @return the nombre
      */
