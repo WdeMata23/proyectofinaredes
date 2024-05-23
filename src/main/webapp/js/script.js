@@ -39,9 +39,9 @@ function reloj() {
         document.getElementById('fechaHeader').innerHTML = dia + "/" + mes + "/" + anio + " " + hora + ":" + minuto + ":" + segundo;
     }
 
-    t = setTimeout(function () {
+    /*t = setTimeout(function () {
         reloj()
-    }, 500);
+    }, 500);*/
 }
 
 /**
@@ -205,5 +205,4 @@ function contadorCaracteres(pTextArea, pRestante, pLimite) {
         }
     }
 }
-
-<jsp:directive.page xmlns:p="http://primefaces.org/ui" />
+//<jsp:directive.page xmlns:p="http://primefaces.org/ui" />

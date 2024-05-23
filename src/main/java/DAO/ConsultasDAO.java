@@ -7,6 +7,9 @@ package DAO;
 import DTO.Detalle_Factura;
 import DTO.Inventario;
 import DTO.Usuario;
+import java.sql.Connection;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,8 +22,7 @@ import java.util.List;
  */
 public class ConsultasDAO {
 
-    ConexionDAO con = new ConexionDAO();
-
+    ConexionDAO con = new ConexionDAO(); 
     public List<Usuario> consultarUsuarios() throws Exception {
         List<Usuario> Usuarios = new ArrayList<Usuario>();
 
@@ -148,6 +150,19 @@ public class ConsultasDAO {
         System.out.println("Nombre: " + nombre + " Puesto: " + puesto + " Usuario: " + usuario + " Contraseña: " + contraseña);
         System.out.println("---------------------------------------------------");
     }
+    public void registrarImpresion(String reporte, String filtro, String usuario) throws Exception {
+        //try (Connection ConexionDAO = con.conexionMysql()) { 
+        String query = "INSERT INTO control_impresion (reporte, filtro,fecha, usuario) VALUES ('" + reporte + "','" + filtro + "',NOW(),'" + usuario + "')"; 
+        System.out.println("Query: " + query);  // Mensaje de depuración
+        try {
+            Statement s = con.conexionMysql().createStatement();
+            s.executeUpdate(query); 
+
+        } catch (Exception e) {
+            System.out.println("Error al realizar la inserción: " + e.getMessage());
+        }
+
+    } 
     
 
 }

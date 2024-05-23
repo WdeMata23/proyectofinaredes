@@ -23,39 +23,50 @@
 <h:body>
     <h1>DETALLE FACTURA DE VENTAS</h1>
     <div>
-        <h:form>
+        <h:form id="formDetalleFacturas">
             <p:panelGrid columns="2">
-                <p:outputLabel value="ID_FACTURA "/>
-                <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtfactura" value="#{bkn_detalle_factura.id_factura}"/>
-                <p:outputLabel value="ID_PRODUCTO "/>
-                <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtproducto" value="#{bkn_detalle_factura.id_producto}"/>
-                <p:outputLabel value="CANTIDAD "/>
-                <p:inputText placeholder="Ejem. 18, 3, 35, 5 " id="txtcantidad" value="#{bkn_detalle_factura.cantidad}"/>
+                <p:outputLabel value="ID_FACTURA " />
+                <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtfactura" value="#{bkn_detallefactura.id_factura}" />
+                <p:outputLabel value="ID_PRODUCTO " />
+                <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtproducto" value="#{bkn_detallefactura.id_producto}" />
+                <p:outputLabel value="CANTIDAD " />
+                <p:inputText placeholder="Ejem. 18, 3, 35, 5 " id="txtcantidad" value="#{bkn_detallefactura.cantidad}" />
             </p:panelGrid>
             <p:panelGrid columns="4">
-                <p:commandButton icon="pi pi-plus" value="AGREGAR" actionListener="#{yourManagedBean.agregarAction}"/>
-                <p:commandButton icon="pi pi-refresh" value="ACTUALIZAR" actionListener="#{yourManagedBean.actualizarAction}"/>
-                <p:commandButton id="btnControlUsuarios" value="REGRESAR" action="ControlUsuarios.xhtml" styleClass="rounded-button ui-button-success" icon="pi pi-arrow-left" title="REGRESAR"/>
+                <p:commandButton id="btningresar" value="INGRESAR" action="#{bkn_detallefactura.agregarDetalleFactura()}" styleClass="rounded-button ui-button-success" />
+                <p:commandButton id="btnEGRESO" value="REGRESA" action="#{bkn_Inicio.Home()}" styleClass="rounded-button ui-button-success" />
             </p:panelGrid>
             
             <p:dataTable value="#{bkn_InventarioDTO.listadetallefactura}" var="item">
                 <p:column>
                     <f:facet name="header">id</f:facet>
-                    <p:outputLabel value="#{item.id}"/>
+                    <p:outputLabel value="#{item.id}" />
                 </p:column>
                 <p:column>
                     <f:facet name="header">id_factura</f:facet>
-                    <p:outputLabel value="#{item.id_factura}"/>
+                    <p:outputLabel value="#{item.id_factura}" />
                 </p:column>
                 <p:column>
                     <f:facet name="header">id.producto</f:facet>
-                    <p:outputLabel value="#{item.id_producto}"/>
+                    <p:outputLabel value="#{item.id_producto}" />
                 </p:column>
                 <p:column>
                     <f:facet name="header">cantidad</f:facet>
-                    <p:outputLabel value="#{item.cantidad}"/>
+                    <p:outputLabel value="#{item.cantidad}" />
+                </p:column>
+                <p:column headerText="Acciones">
+                    <p:commandButton value="Ver Factura" 
+                                     actionListener="#{bkn_detallefactura.setIdFacturaSeleccionada(item.id_factura)}"
+                                     update=":formDetalleFacturas:reporteDialog" 
+                                     oncomplete="PF('reporteDialog').show()" 
+                                     icon="pi pi-print" />
                 </p:column>
             </p:dataTable>
+
+            <p:dialog id="reporteDialog" header="Reporte de Factura" widgetVar="reporteDialog" modal="true" width="60%">
+                <iframe id="reporteFrame" width="100%" height="500px" 
+                        src="ReporteFactura.xhtml?id=#{bkn_detallefactura.idFacturaSeleccionada}" frameborder="0"></iframe>
+            </p:dialog>
         </h:form>
     </div>
     <br></br>
