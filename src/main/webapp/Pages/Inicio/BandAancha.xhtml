@@ -1,5 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <head>
     <title>Graficando Datos Aleatorios</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -28,8 +32,6 @@
         <h4>Dirección IPv6:     fe80::7ca5:c067:f8a4:b38d%20</h4>
     </div>
 </div>
-
-
 
     <script>
         const ctx = document.getElementById('myChart').getContext('2d');
@@ -78,12 +80,14 @@ let myChart = new Chart(ctx, {
             myChart.update(); // Actualiza el gráfico
             
             // Actualiza los números aleatorios
-            document.getElementById('envioNumeroAleatorio').textContent = 'Envío: ' + Math.floor(Math.random() * 100);
-            document.getElementById('recepcionNumeroAleatorio').textContent = 'Recepción: ' + Math.floor(Math.random() * 100);
+            document.getElementById('envioNumeroAleatorio').textContent = 'Envío: ' + Math.floor(Math.random() * 1000);
+            document.getElementById('recepcionNumeroAleatorio').textContent = 'Recepción: ' + Math.floor(Math.random() * 1000);
         }
 
         // Actualiza los datos cada segundo
         setInterval(updateData, 1000);
     </script>
+        <!-- Botón de regreso -->
+                <p:commandButton id="btnEGRESO" value="REGRESAR" action="#{bkn_Inicio.Home()}" styleClass="rounded-button ui-button-success"/> 
 </body>
 </html>
