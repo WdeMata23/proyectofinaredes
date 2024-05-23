@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Graficando Datos Aleatorios</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    
+<div style="display: flex; flex-direction: column; align-items: start;">
+    <!-- Título Envío -->
+    <div>
+        <h2>ENVÍO Kbps</h2>
+        <p id="envioNumeroAleatorio">Número Aleatorio:</p>
+    </div>
+    
+    <!-- Título Recepción -->
+    <div>
+        <h2>RECEPCIÓN Kbps</h2>
+        <p id="recepcionNumeroAleatorio">Número Aleatorio:</p>
+    </div>
+    
+    <!-- Nuevo Título -->
+    <div>
+        <h4>Nombre del adaptador:   Ethernet</h4>
+        <h4>Tipo de conexión:   Ethernet</h4>
+        <h4>Dirección IPv4:     169.254.133.181</h4>
+        <h4>Dirección IPv6:     fe80::7ca5:c067:f8a4:b38d%20</h4>
+    </div>
+</div>
+
+
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+let myChart = new Chart(ctx, {
+    type: 'line', // Tipo de gráfico
+    data: {
+        labels: [], // Etiquetas para el eje X
+        datasets: [{
+            label: 'CONTROL ANCHO DE BANDA',
+            data: [], // Datos para el gráfico
+            borderColor: 'rgba(75,192,192,1)',
+            fill: false
+        }]
+    },
+    options: {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'CONTROL ANCHO DE BANDA',
+            fontSize: 24 // Ajusta el tamaño del título aquí
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+        function updateData() {
+            // Agrega una nueva etiqueta y dato aleatorio
+            const now = new Date().toLocaleTimeString();
+            const value = Math.floor(Math.random() * 100);
+            myChart.data.labels.push(now);
+            myChart.data.datasets[0].data.push(value);
+
+            // Mantiene solo los últimos 10 datos visibles
+            if (myChart.data.labels.length > 10) {
+                myChart.data.labels.shift();
+                myChart.data.datasets[0].data.shift();
+            }
+
+            myChart.update(); // Actualiza el gráfico
+            
+            // Actualiza los números aleatorios
+            document.getElementById('envioNumeroAleatorio').textContent = 'Envío: ' + Math.floor(Math.random() * 100);
+            document.getElementById('recepcionNumeroAleatorio').textContent = 'Recepción: ' + Math.floor(Math.random() * 100);
+        }
+
+        // Actualiza los datos cada segundo
+        setInterval(updateData, 1000);
+    </script>
+</body>
+</html>
