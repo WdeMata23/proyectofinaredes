@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <h:head>
+        <h:outputScript name="script.js" library="js"/>
+        <h:outputStylesheet name="default.css" library="css"/>
+        <h:outputStylesheet name="theme.css" library="css"/>
+        <title>configDHCP</title>
+    </h:head>
+    
+    <h:body>
+        <h:form id="dhcpForm1">
+            <h1>Configuración DHCP</h1>
+
+            <h:panelGrid columns="3" cellpadding="5">
+                <h:outputLabel for="subnet" value="SUBNET:" />
+                <p:inputText id="subnet" value="#{bkn_DHCPBean1.subnet}" />
+                <p:commandButton value="Borrar" action="#{bkn_DHCPBean1.BORRARG()}" update=":dhcpForm1" />
+
+                <h:outputLabel for="domainS" value="DOMAIN SERVER:" />
+                <p:inputText id="domainS" value="#{bkn_DHCPBean1.domainS}" />
+                <p:commandButton value="Borrar" action="#{bkn_DHCPBean1.BORRARD()}" update=":dhcpForm1" />
+                
+                <h:outputLabel for="domainN" value="DOMAIN NAME:" />
+                <p:inputText id="domainN" value="#{bkn_DHCPBean1.domainN}" />
+                <p:commandButton value="Borrar" action="#{bkn_DHCPBean1.BORRARN()}"  update=":dhcpForm1"/>
+                
+                <h:outputLabel for="puertaE" value="PUERTA DE ENLACE:" />
+                <p:inputText id="puertaE" value="#{bkn_DHCPBean1.puertaE}" />
+                <p:commandButton value="Borrar" action="#{bkn_DHCPBean1.BORRARH()}" update=":dhcpForm1" />
+
+                <h:outputLabel for="dhcp" value="Ip_DHCP:" />
+                <p:inputText id="dhcp" value="#{bkn_DHCPBean1.dhcp}" />
+                <p:commandButton value="Borrar" action="#{bkn_DHCPBean1.BORRARW()}" update=":dhcpForm1"/>
+
+  
+                                
+            </h:panelGrid>
+            
+            <h:panelGrid columns="5" cellpadding="5">
+                
+                <h:outputLabel for="RangoInicioPc" value="Rango inicio pc" />
+                <p:inputText id="RangoInicioPc" value="#{bkn_DHCPBean1.rangoInicio}" />
+                <h:outputLabel for="RangoFinalPc" value="Rango final pc" />
+                <p:inputText id="RangoFinalPc" value="#{bkn_DHCPBean1.randoFin}" />
+                <p:commandButton value="Borrar" action="#{bkn_DHCPBean1.BORRARF()}" update=":dhcpForm1"/>
+                </h:panelGrid>
+
+            <p:commandButton value="Configurar" action="#{bkn_DHCPBean1.CONFIGURAR()}" update=":dhcpForm1" />
+            <p:commandButton style="margin-left: 40px;" value="Regresar principal" action="#{bkn_DHCPBean1.Home()}" update=":dhcpForm1" />
+        </h:form>
+    </h:body>
+</html>

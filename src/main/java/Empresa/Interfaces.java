@@ -22,7 +22,7 @@ public class Interfaces implements Serializable {
     public void Home() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            externalContext.redirect("http://localhost:8080/CopiandoProyecto/Pages/Inicio/VentanaPrincipal.xhtml"); // Reemplaza esta URL con la que desees abrir.
+            externalContext.redirect("http://localhost:8084/CopiandoProyecto/Pages/Inicio/VentanaPrincipal.xhtml"); // Reemplaza esta URL con la que desees abrir.
         } catch (IOException ex) {
             Logger.getLogger(Interfaces.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -31,16 +31,25 @@ public class Interfaces implements Serializable {
     public void INGRESOPRODUCTOS() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            externalContext.redirect("http://localhost:8080/CopiandoProyecto/Pages/Inicio/IngresoProductos.xhtml"); // Reemplaza esta URL con la que desees abrir.
+            externalContext.redirect("http://localhost:8084/CopiandoProyecto/Pages/Inicio/IngresoProductos.xhtml"); // Reemplaza esta URL con la que desees abrir.
         } catch (IOException ex) {
             Logger.getLogger(Interfaces.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void CONTROLUSUARIOS() {
+    public void REGISTROPRODUCTOS() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-            externalContext.redirect("http://localhost:8080/CopiandoProyecto/Pages/Inicio/ControlUsuarios.xhtml"); // Reemplaza esta URL con la que desees abrir.
+            externalContext.redirect("http://localhost:8084/CopiandoProyecto/Pages/Inicio/RegistroProductos.xhtml"); // Reemplaza esta URL con la que desees abrir.
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaces.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void CONFIG_DHCP() {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            externalContext.redirect("http://localhost:8084/CopiandoProyecto/Pages/Inicio/ConfigDHCP.xhtml"); // Reemplaza esta URL con la que desees abrir.
         } catch (IOException ex) {
             Logger.getLogger(Interfaces.class.getName()).log(Level.SEVERE, null, ex);
         }

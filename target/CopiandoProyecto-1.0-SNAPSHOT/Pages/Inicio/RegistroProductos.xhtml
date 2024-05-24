@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Ingreso de Productos</title>
+</h:head>
+<h:body>
+    <h:form id="formIngresoProductos">
+        <p:growl id="growl" showDetail="true" sticky="false" life="3000"/>
+        
+        <p:panel header="Ingreso de Productos">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="nombre" value="Nombre:" />
+                <p:inputText id="nombre" value="#{bknIngresoProductos.nombre}" required="true" />
+
+                <h:outputLabel for="modelo" value="Modelo:" />
+                <p:inputText id="modelo" value="#{bknIngresoProductos.modelo}" required="true" />
+            </h:panelGrid>
+            <p:commandButton value="Guardar" action="#{bknIngresoProductos.guardarProducto}" icon="pi pi-save" style="background-color: #4CAF50; border: none;"
+                             update="@form:tablaProductos, @form, @form:growl"/>
+            <p:commandButton value="Inicio" action="#{bknIngresoProductos.irAPaginaInicio}" icon="pi pi-home" style="background-color: #4CAF50; border: none;"/>
+        </p:panel>
+        
+        <p:panel header="Lista de Productos">
+            <p:dataTable id="tablaProductos" value="#{bknIngresoProductos.listaProductos}" var="producto" 
+                         selection="#{bknIngresoProductos.productoSeleccionado}" 
+                         selectionMode="single" rowKey="#{producto.id}" 
+                         >
+                <p:ajax event="rowSelect" listener="#{bknIngresoProductos.seleccionarProducto}" update="@form"/>
+                <p:column headerText="ID">
+                    <h:outputText value="#{producto.id}" />
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{producto.nombre}" />
+                </p:column>
+                <p:column headerText="Modelo">
+                    <h:outputText value="#{producto.modelo}" />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>

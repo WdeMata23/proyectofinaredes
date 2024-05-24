@@ -5,127 +5,59 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
-        <title>Facturas</title>
-        <link rel="stylesheet" 
-              href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css"/>
-        <link rel="stylesheet"
-              href="#{facesContext.externalContext.requestContextPath}/resources/css/theme.css"/>
-        <script type="text/javascript"
-                src="#{facesContext.externalContext.requestContextPath}/resources/js/script.js"/>
-        <style>
-            .titulo{
-                font-size: 35px;
-                text-align: center;
-            }
-
-            .formulario {
-                float: left; /* Posiciona el elemento a la izquierda */
-                margin-right: 10px;
-                border: 1px solid black;
-                padding-bottom: 12px;
-
-            }
-            .tabla1{
-                height: 318px;
-                margin-bottom: 20px;
-                margin-right: 10px;
-                overflow-y: auto;
-                position: relative;
-                border: 1px solid black;
-            }
-            .tabla2{
-                border: 1px solid black;
-            }
-            .titulo2{
-                position: absolute;
-                text-align: center;
-                position: absolute;
-
-            }
-        </style>
-
-    </h:head>
-    <h:body>
-        <h1 class="titulo">CONTROL DE FACTURAS</h1>
-        <div>
-            <h:form id="formDetalleFacturas">  
-
-                <div class="formulario"> 
-                    <h1>Ingreso de factura</h1>
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="ID_FACTURA " />
-                        <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtfactura" value="#{bkn_detallefactura.id_factura}" />
-                        <p:outputLabel value="ID_PRODUCTO " />
-                        <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtproducto" value="#{bkn_detallefactura.id_producto}" />
-                        <p:outputLabel value="CANTIDAD " />
-                        <p:inputText placeholder="Ejem. 18, 3, 35, 5 " id="txtcantidad" value="#{bkn_detallefactura.cantidad}" />
-                    </p:panelGrid>
-                    <p:panelGrid columns="4">
-                        <p:commandButton id="btningresar" value="INGRESAR" action="#{bkn_detallefactura.agregarDetalleFactura()}" styleClass="rounded-button ui-button-success" />
-                        <p:commandButton id="btnEGRESO" value="REGRESA" action="#{bkn_Inicio.Home()}" styleClass="rounded-button ui-button-success" />
-                    </p:panelGrid>
-                </div>
-                <div class="tabla1">   
-                    <h1 class="titulo2">Factura de venta</h1>
-                    <p:dataTable value="#{bkn_InventarioDTO.lista_facturas}" var="fac">
-                        <p:column>
-                            <f:facet name="header">ID</f:facet>
-                            <p:outputLabel value="#{fac.id}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Detalle ID</f:facet>
-                            <p:outputLabel value="#{fac.id_detalle_factura}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Fecha</f:facet>
-                            <p:outputLabel value="#{fac.fecha}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">cantidad</f:facet>
-                            <p:outputLabel value="#{fac.cliente}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Total</f:facet>
-                            <p:outputLabel value="#{fac.monto_total}" />
-                        </p:column>
-                    </p:dataTable>
-                </div>
-                <div class="tabla2">   
-                    <h1 class="titulo2">Detalle de factura</h1>
-
-                    <p:dataTable value="#{bkn_InventarioDTO.listadetallefactura}" var="item">
-                        <p:column>
-                            <f:facet name="header">id</f:facet>
-                            <p:outputLabel value="#{item.id}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">id_factura</f:facet>
-                            <p:outputLabel value="#{item.id_factura}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">id.producto</f:facet>
-                            <p:outputLabel value="#{item.id_producto}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">cantidad</f:facet>
-                            <p:outputLabel value="#{item.cantidad}" />
-                        </p:column>
-                        <p:column headerText="Acciones">
-                            <p:commandButton value="Ver Factura" 
-                                             actionListener="#{bkn_detallefactura.setIdFacturaSeleccionada(item.id_factura)}"
-                                             update=":formDetalleFacturas:reporteDialog" 
-                                             oncomplete="PF('reporteDialog').show()" 
-                                             icon="pi pi-print" />
-                        </p:column>
-                    </p:dataTable>
-                </div>
-                <p:dialog id="reporteDialog" header="Reporte de Factura" widgetVar="reporteDialog" modal="true" width="60%">
-                    <iframe id="reporteFrame" width="100%" height="500px" 
-                            src="ReporteFactura.xhtml?id=#{bkn_detallefactura.idFacturaSeleccionada}" frameborder="0"></iframe>
-                </p:dialog>
-            </h:form>
-        </div>
-        <br></br>
-    </h:body>
+<h:head>
+    <title>detalle facturas de venta</title>
+    <link rel="stylesheet" 
+          href="#{facesContext.externalContext.requestContextPath}/resources/css/default.css"/>
+    <link rel="stylesheet"
+          href="#{facesContext.externalContext.requestContextPath}/resources/css/theme.css"/>
+    <script type="text/javascript"
+            src="#{facesContext.externalContext.requestContextPath}/resources/js/script.js"/>
+    <style>
+        h1 {
+            font-size: 35px;
+            text-align: center;
+        }
+    </style>
+</h:head>
+<h:body>
+    <h1>DETALLE FACTURA DE VENTAS</h1>
+    <div>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="ID_FACTURA "/>
+                <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtfactura" value="#{bkn_detallefactura.id_factura}"/>
+                <p:outputLabel value="ID_PRODUCTO "/>
+                <p:inputText placeholder="Ejem. 1, 2, 3, 4 " id="txtproducto" value="#{bkn_detallefactura.id_producto}"/>
+                <p:outputLabel value="CANTIDAD "/>
+                <p:inputText placeholder="Ejem. 18, 3, 35, 5 " id="txtcantidad" value="#{bkn_detallefactura.cantidad}"/>
+           
+            </p:panelGrid>
+            <p:panelGrid columns="4">
+                <p:commandButton id="btningresar" value="INGRESAR" action="#{bkn_detallefactura.agregarDetalleFactura()}" styleClass="rounded-button ui-button-success"/>           
+                <p:commandButton id="btnEGRESO" value="REGRESA" action="#{bkn_Inicio.Home()}" styleClass="rounded-button ui-button-success"/> 
+            </p:panelGrid>
+            
+            <p:dataTable value="#{bkn_InventarioDTO.listadetallefactura}" var="item">
+                <p:column>
+                    <f:facet name="header">id</f:facet>
+                    <p:outputLabel value="#{item.id}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">id_factura</f:facet>
+                    <p:outputLabel value="#{item.id_factura}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">id.producto</f:facet>
+                    <p:outputLabel value="#{item.id_producto}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">cantidad</f:facet>
+                    <p:outputLabel value="#{item.cantidad}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </div>
+    <br></br>
+</h:body>
 </html>
