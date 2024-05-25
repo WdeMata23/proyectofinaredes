@@ -5,7 +5,9 @@
 package DTO;
 
 import Empresa.Interfaces;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
@@ -121,7 +123,7 @@ public class DHCPBean implements Serializable {
         }
     }
    
-   public void CONFIGURAR(){
+   /** public void CONFIGURAR2(){
        String command = String.format(
             "echo 'subnet %s netmask 255.255.255.0 {\n" +
             "  range %s %s;\n" +
@@ -135,5 +137,59 @@ public class DHCPBean implements Serializable {
         SSHClient client = new SSHClient("tu_usuario", "tu_contraseña", "192.168.1.3", 22);
         String response = client.executeCommand(command);
         System.out.println("SSH Response: " + response);
-   } 
+   } **/
+   
+   //configurar en ubuntu
+   /**public void CONFIGURAR() {
+        StringBuilder command = new StringBuilder();
+        command.append("echo SUBNET: ").append(this.subnet).append(" && ");
+        command.append("echo DOMAIN SERVER: ").append(this.domainS).append(" && ");
+        command.append("echo DOMAIN NAME: ").append(this.domainN).append(" && ");
+        command.append("echo PUERTA DE ENLACE: ").append(this.puertaE).append(" && ");
+        command.append("echo IP_DHCP: ").append(this.dhcp).append(" && ");
+        command.append("echo Rango inicio pc: ").append(this.rangoInicio).append(" && ");
+        command.append("echo Rango final pc: ").append(this.randoFin);
+
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", command.toString());
+            Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            process.waitFor();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Configuración enviada a la terminal de Ubuntu."));
+        } catch (IOException | InterruptedException e) {
+            Logger.getLogger(DHCPBean.class.getName()).log(Level.SEVERE, null, e);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo enviar la configuración a la terminal de Ubuntu."));
+        }
+    } **/
+   
+   // prueba configuracion en windos
+   public void CONFIGURARW() {
+        String command = String.format(
+                "echo SUBNET: %s && echo DOMAIN SERVER: %s && echo DOMAIN NAME: %s && echo PUERTA DE ENLACE: %s && echo IP_DHCP: %s && echo Rango inicio pc: %s && echo Rango final pc: %s",
+                this.subnet, this.domainS, this.domainN, this.puertaE, this.dhcp, this.rangoInicio, this.randoFin);
+
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", command);
+            Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            process.waitFor();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Configuración enviada a la terminal de Windows CMD."));
+        } catch (IOException | InterruptedException e) {
+            Logger.getLogger(DHCPBean.class.getName()).log(Level.SEVERE, null, e);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo enviar la configuración a la terminal de Windows CMD."));
+        }
+    }
+   // se pueden ver los resultados en output en la seccion Apache Tomcat or TomEE
+   
+   
 }
