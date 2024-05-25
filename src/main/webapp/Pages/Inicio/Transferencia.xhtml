@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Graficando Datos Aleatorios</title>
+    <!-- Eliminado la referencia a chart.js ya que no se utiliza -->
+</head>
+<body>
+    
+    <div style="display: flex; flex-direction: column; align-items: start;">
+        <!-- Nuevo Título -->
+        <div>
+            <h4>Estado del Medio:   Habilitado</h4>
+        </div>
+
+        <!-- Título Envío -->
+        <div>
+            <p id="envioNumeroAleatorio">Número Aleatorio:</p>
+        </div>
+        
+        <!-- Título Recepción -->
+        <div>
+            <p id="recepcionNumeroAleatorio">Número Aleatorio:</p>
+        </div>
+        
+        <!-- Título velocidad -->
+        <div>
+            <p id="velocidaNumeroAleatorio">Número Aleatorio:</p>
+        </div>
+        <!-- Título Duración -->
+        <div>
+            <h4>Duración:</h4>
+            <span id="cronometroDuracion">00:00:00</span>
+        </div>
+    </div>
+
+    <script>
+        // Función para actualizar los números aleatorios y el cronómetro
+        function updateRandomNumbers() {
+            // Actualiza los números aleatorios
+            document.getElementById('envioNumeroAleatorio').textContent = 'Bytes Enviado: ' + Math.floor(Math.random() * 1000);
+            document.getElementById('recepcionNumeroAleatorio').textContent = 'Bytes Recibidos: ' + Math.floor(Math.random() * 1000);
+            document.getElementById('velocidaNumeroAleatorio').textContent = 'Velocidad de Vinculo (Mbps): ' + Math.floor(Math.random() * 10000);
+            
+            // Actualiza la duración del cronómetro
+            let cronometroElement = document.getElementById('cronometroDuracion');
+            let currentHours = parseInt(cronometroElement.textContent.split(':')[0]);
+            let currentMinutes = parseInt(cronometroElement.textContent.split(':')[1]);
+            let currentSeconds = parseInt(cronometroElement.textContent.split(':')[2]);
+
+            currentSeconds++; // Incrementa los segundos
+            if (currentSeconds >= 60) { // Si llegamos a 60 segundos, reinicia los segundos y avanza los minutos
+                currentSeconds = 0;
+                currentMinutes++;
+                if (currentMinutes >= 60) { // Si llegamos a 60 minutos, reinicia los minutos y avanza las horas
+                    currentMinutes = 0;
+                    currentHours++;
+                }
+            }
+
+            // Formatea los valores de hora, minuto y segundo para mostrarlos correctamente
+            cronometroElement.textContent = String(currentHours).padStart(2, '0') + ':' +
+                                           String(currentMinutes).padStart(2, '0') + ':' +
+                                           String(currentSeconds).padStart(2, '0');
+        }
+
+        // Actualiza los números aleatorios y el cronómetro cada segundo
+        setInterval(updateRandomNumbers, 1000);
+    </script>
+</body>
+</html>
